@@ -8,7 +8,7 @@
     "build": "tsc",
     "serve": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.tsrs"
+    "dev": "nodemon index.ts"
   },
   "keywords": [],
   "author": "",

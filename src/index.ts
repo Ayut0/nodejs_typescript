@@ -3,9 +3,11 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers } from "./schema/schema";
 import type { Express, Request, Response } from "express";
+import container from "./containers/container";
+import { UserController } from "./controllers/useController";
 
 const app: Express = express();
-const port = 3000;
+const PORT = 3000;
 
 // Apollo server setup
 const server = new ApolloServer({ typeDefs, resolvers });
@@ -19,14 +21,24 @@ app.use(express.json());
 
 // app.get("/", (req: Request, res: Response) => res.send("Hello World!"));
 
-(async () => {
-  await server.start();
-  // Connect Apollo with Express
-  server.applyMiddleware({ app });
-  app.listen(port, () => {
-    console.log(`Node Example app listening on port ${port}!`);
-    console.log(
-      `GraphQL server ready at http://localhost:${port}${server.graphqlPath}`
-    );
-  });
-})();
+const userController = container.resolve<UserController>("userController");
+
+app.post("/api/post", userController.createUser.bind(userController));
+app.get("/api/users/:id", userController.getUser.bind(userController));
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+// For GraphQL
+// (async () => {
+//   await server.start();
+//   // Connect Apollo with Express
+//   server.applyMiddleware({ app });
+//   app.listen(PORT, () => {
+//     console.log(`Node Example app listening on port ${port}!`);
+//     console.log(
+//       `GraphQL server ready at http://localhost:${port}${server.graphqlPath}`
+//     );
+//   });
+// })();
