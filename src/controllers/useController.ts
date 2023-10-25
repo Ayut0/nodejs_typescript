@@ -1,6 +1,21 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/userService";
 
+// Of course, you can define the interfaces for each request and response
+interface CreateUserRequest{
+  name: string;
+  email: string;
+  password: string;
+  isAdmin: boolean;
+}
+
+interface GetUserResponse{
+  id: number;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+}
+
 // constructor runs when the class is instantiated
 // Responsible for handling the requests and responses
 export class UserController {
@@ -32,5 +47,10 @@ export class UserController {
     }
 
     res.json(user);
+  }
+
+  getAllUsers(req: Request, res: Response): void{
+    const allUsers = this.userService.getAllUsers();
+    res.json(allUsers);
   }
 }
