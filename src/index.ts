@@ -25,6 +25,7 @@ const userController = container.resolve<UserController>("userController");
 
 app.post("/api/post", userController.createUser.bind(userController));
 app.get("/api/users/:id", userController.getUser.bind(userController));
+app.get("/api/users", userController.getAllUsers.bind(userController));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

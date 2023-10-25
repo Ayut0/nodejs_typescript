@@ -3,6 +3,7 @@ import { User } from "../models/userModel";
 export interface UserService {
   createUser(user: User): User;
   getUserById(id: number): User | undefined;
+  getAllUsers(): User[];
 }
 
 // Define a class that implements the UserService interface
@@ -19,5 +20,9 @@ export class UserServiceImpl implements UserService {
 
   getUserById(id: number): User | undefined {
     return this.users.find((user) => user.id === id);
+  }
+
+  getAllUsers(): User[] {
+    return this.users;
   }
 }
